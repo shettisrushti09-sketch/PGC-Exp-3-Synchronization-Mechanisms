@@ -1,0 +1,15 @@
+# Compiled executables
+race
+critical
+atomic
+barrier
+semaphore
+lock
+performance
+compare_sync
+
+# Object files
+*.o
+
+# Python cache
+__pycache__/

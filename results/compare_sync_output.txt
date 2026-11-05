@@ -1,0 +1,30 @@
+Comparing synchronization mechanisms for 10000000 shared increments
+
+Mechanism | Threads | Final Count | Correctness |     Time (s)
+---------------------------------------------------------------
+None       |       1 |     10000000 |    Correct |     0.0075
+Critical   |       1 |     10000000 |    Correct |     0.1175
+Atomic     |       1 |     10000000 |    Correct |     0.0709
+Lock       |       1 |     10000000 |    Correct |     0.1274
+---------------------------------------------------------------
+None       |       2 |      6912581 |  INCORRECT |     0.0084
+Critical   |       2 |     10000000 |    Correct |     0.2617
+Atomic     |       2 |     10000000 |    Correct |     0.1587
+Lock       |       2 |     10000000 |    Correct |     0.3117
+---------------------------------------------------------------
+None       |       4 |      5043596 |  INCORRECT |     0.0100
+Critical   |       4 |     10000000 |    Correct |     0.2892
+Atomic     |       4 |     10000000 |    Correct |     0.1799
+Lock       |       4 |     10000000 |    Correct |     0.3396
+---------------------------------------------------------------
+None       |       8 |      8830290 |  INCORRECT |     0.0156
+Critical   |       8 |     10000000 |    Correct |     0.2555
+Atomic     |       8 |     10000000 |    Correct |     0.1625
+Lock       |       8 |     10000000 |    Correct |     0.3587
+---------------------------------------------------------------
+
+Expected correct final count = 10000000
+Observation: 'None' is fastest but incorrect (race condition).
+'Critical' is correct but slowest (coarse-grained locking).
+'Atomic' and 'Lock' are correct; 'Atomic' scales better since it
+uses lightweight hardware instructions instead of OS-level locks.
